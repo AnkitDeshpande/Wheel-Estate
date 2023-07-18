@@ -2,8 +2,6 @@ package com.wheelEstate.color;
 
 public class Console {
 
-	public static final String RESET = "\033[0m"; // Text Reset
-
 	public static final String ERASE = "\033[H\033[2J";
 
 	public static final String HIDDEN = "\033[8;30m";
@@ -128,5 +126,11 @@ public class Console {
 	public static final String PURPLE_BACKGROUND_BRIGHT = "\033[0;105m"; // PURPLE
 	public static final String CYAN_BACKGROUND_BRIGHT = "\033[0;106m"; // CYAN
 	public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m"; // WHITE
+
+	public static final String BOLD = "\033[1m"; // or "\u001B[1m"
+	public static final String RESET = "\033[0m"; // Text Reset
+
+	// Additional escape code for coloring the text inside the box
+	public static final String COLOR_TEXT = "\033[38;5;231m"; // Light gray
 
 }
