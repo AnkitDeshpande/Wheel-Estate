@@ -3,6 +3,7 @@ package com.wheelEstate.ui;
 import java.util.Scanner;
 
 public class CustomerUI {
+
 	static void displayCustomerMenu() {
 		System.out.println("╔═════════════ Customer Menu ══════════════╗");
 		System.out.println("║ 1. Search and Filter Cars                ║");
@@ -13,8 +14,10 @@ public class CustomerUI {
 		System.out.println("║ 6. View Rewards and Discounts            ║");
 		System.out.println("║ 7. Provide Feedback and Ratings          ║");
 		System.out.println("║ 8. Contact Customer Support              ║");
+		System.out.println("║ 9. Make Reservation                      ║");
+		System.out.println("║ 10. Cancel Reservation                   ║");
 		System.out.println("║ 0. Logout                                ║");
-		System.out.println("╚═════════════════════════════════════════╝");
+		System.out.println("╚═════════════════════════════════════════=╝");
 	}
 
 	static void customerMenu(Scanner sc) {
@@ -48,6 +51,12 @@ public class CustomerUI {
 			case 8:
 				contactCustomerSupport(sc);
 				break;
+			case 9:
+				makeReservation(sc);
+				break;
+			case 10:
+				cancelReservation(sc);
+				break;
 			case 0:
 				System.out.println("Logout Successfully");
 				break;
@@ -58,53 +67,51 @@ public class CustomerUI {
 	}
 
 	private static void contactCustomerSupport(Scanner sc) {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 	private static void provideFeedbackAndRatings(Scanner sc) {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 	private static void viewRewardsAndDiscounts() {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 	private static void addPaymentMethod(Scanner sc) {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 	private static void viewRentalCharges(Scanner sc) {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 	private static void checkCarAvailability(Scanner sc) {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 	private static void viewRentalPolicies() {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 	private static void searchAndFilterCars(Scanner sc) {
-		// TODO Auto-generated method stub
+		// TODO: Implement the method
+	}
 
+	private static void makeReservation(Scanner sc) {
+		// TODO: Implement the method
+	}
+
+	private static void cancelReservation(Scanner sc) {
+		// TODO: Implement the method
 	}
 
 	public static void login(Scanner sc) {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 	public static void customerRegister(Scanner sc) {
-		// TODO Auto-generated method stub
-
+		// TODO: Implement the method
 	}
 
 }

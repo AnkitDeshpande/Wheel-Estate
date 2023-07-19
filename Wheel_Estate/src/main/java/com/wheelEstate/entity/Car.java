@@ -13,47 +13,47 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Car {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long carId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long carId;
 
-    @Column(nullable = false)
-    private String brand;
+	@Column(nullable = false)
+	private String brand;
 
-    @Column(nullable = false)
-    private String model;
+	@Column(nullable = false)
+	private String model;
 
-    @Column(nullable = false)
-    private int year;
+	@Column(nullable = false)
+	private double price;
 
-    @Column(nullable = false)
-    private BigDecimal mileage;
+	@Column(nullable = false)
+	private BigDecimal mileage;
 
-    @Column(nullable = false)
-    private boolean availability;
+	@Column(nullable = false)
+	private boolean availability;
 
-    @Column(nullable = false)
-    private boolean isDeleted;
+	@Column(nullable = false)
+	private boolean isDeleted;
 
-    @OneToMany(mappedBy = "car")
-    private Set<Reservation> reservations = new HashSet<>();
+	@OneToMany(mappedBy = "car")
+	private Set<Reservation> reservations = new HashSet<>();
 
-    @OneToMany(mappedBy = "car")
-    private Set<Feedback> feedbacks = new HashSet<>();
+	@OneToMany(mappedBy = "car")
+	private Set<Feedback> feedbacks = new HashSet<>();
 
-    // Default constructor
-    public Car() {
-    }
+	// Default constructor
+	public Car() {
+	}
 
-    // Parameterized constructor
-    public Car(String brand, String model, int year, BigDecimal mileage, boolean availability, boolean isDeleted) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.mileage = mileage;
-        this.availability = availability;
-        this.isDeleted = isDeleted;
-    }
+	// Parameterized constructor
+	public Car(String brand, String model, double price, BigDecimal mileage, boolean availability, boolean isDeleted) {
+		this.brand = brand;
+		this.model = model;
+		this.price = price;
+		this.mileage = mileage;
+		this.availability = availability;
+		this.isDeleted = isDeleted;
+	}
 
 	public Long getCarId() {
 		return carId;
@@ -67,6 +67,14 @@ public class Car {
 		return brand;
 	}
 
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
@@ -77,14 +85,6 @@ public class Car {
 
 	public void setModel(String model) {
 		this.model = model;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
 	}
 
 	public BigDecimal getMileage() {
@@ -127,6 +127,6 @@ public class Car {
 		this.feedbacks = feedbacks;
 	}
 
-    // Getters and setters
-    
+	// Getters and setters
+
 }
