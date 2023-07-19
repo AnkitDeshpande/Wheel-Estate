@@ -27,11 +27,9 @@ public class Runner {
 				break;
 			case 2:
 				CustomerUI.login(sc);
-				// Call customer functionality methods here after customer login
 				break;
 			case 3:
 				CustomerUI.customerRegister(sc);
-				// Call customer registration methods here
 				break;
 			case 0:
 				System.out.println("Thanks for using the services");
