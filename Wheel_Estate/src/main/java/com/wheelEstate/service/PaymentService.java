@@ -11,9 +11,9 @@ public interface PaymentService {
 
 	void cancelPayment(Long paymentId) throws NoRecordFoundException, SomethingWentWrongException;
 
-	List<Payment> getAllPayments();
+	List<Payment> getAllPayments() throws SomethingWentWrongException;
 
 	Payment getPaymentById(Long paymentId) throws NoRecordFoundException;
 
-	List<Payment> getPaymentsByReservation(Long reservationId);
+	List<Payment> getPaymentsByReservation(Long reservationId) throws SomethingWentWrongException;
 }
