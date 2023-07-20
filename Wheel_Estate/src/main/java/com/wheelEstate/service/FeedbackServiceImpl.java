@@ -29,7 +29,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 	}
 
 	@Override
-	public List<Feedback> getAllFeedbacks() {
+	public List<Feedback> getAllFeedbacks() throws SomethingWentWrongException {
 		FeedbackDAO fd = new FeedbackDAOImpl();
 		return fd.getAllFeedbacks();
 	}
@@ -41,15 +41,15 @@ public class FeedbackServiceImpl implements FeedbackService {
 	}
 
 	@Override
-	public List<Feedback> getFeedbacksByCustomer(Long customerId) {
+	public List<Feedback> getFeedbacksByCustomer(Long customerId) throws SomethingWentWrongException {
 		FeedbackDAO fd = new FeedbackDAOImpl();
 		return fd.getFeedbacksByCustomer(customerId);
 	}
 
 	@Override
-	public List<Feedback> getFeedbacksByCar(Long carId) {
+	public List<Feedback> getFeedbacksByCar(Long carId) throws NoRecordFoundException {
 		FeedbackDAO fd = new FeedbackDAOImpl();
-		return null;
+		return fd.getFeedbacksByCar(carId);
 	}
 
 }

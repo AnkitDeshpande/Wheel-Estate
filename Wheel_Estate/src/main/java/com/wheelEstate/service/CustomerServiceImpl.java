@@ -28,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<Customer> getAllCustomers() {
+	public List<Customer> getAllCustomers() throws SomethingWentWrongException {
 		CustomerDAO cd = new CustomerDAOImpl();
 		return cd.getAllCustomers();
 	}
@@ -43,6 +43,13 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer getCustomerByUsername(String username) throws NoRecordFoundException {
 		CustomerDAO cd = new CustomerDAOImpl();
 		return cd.getCustomerByUsername(username);
+	}
+
+	@Override
+	public void login(String username, String password) throws SomethingWentWrongException {
+		CustomerDAO cd = new CustomerDAOImpl();
+		cd.login(username, password);
+
 	}
 
 }

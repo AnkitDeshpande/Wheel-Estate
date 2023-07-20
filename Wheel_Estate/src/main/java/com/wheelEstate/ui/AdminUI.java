@@ -2,11 +2,12 @@ package com.wheelEstate.ui;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
-import com.wheelEstate.dao.FeedbackDAO;
 import com.wheelEstate.entity.Car;
 import com.wheelEstate.entity.Customer;
+import com.wheelEstate.enums.Admin;
 import com.wheelEstate.exceptions.CarNotAvailableException;
 import com.wheelEstate.exceptions.NoRecordFoundException;
 import com.wheelEstate.exceptions.SomethingWentWrongException;
@@ -53,6 +54,7 @@ public class AdminUI {
 			displayAdminMenu();
 			System.out.print("Enter selection: ");
 			choice = sc.nextInt();
+			sc.nextLine();
 			switch (choice) {
 			case 1:
 				addCar(sc);
@@ -114,6 +116,36 @@ public class AdminUI {
 		} while (choice != 0);
 	}
 
+	private static void printCarDetails(Car car) {
+		System.out.println("--------------------------------------------------");
+		System.out.println("Car Details:");
+		System.out.println("ID: " + car.getCarId());
+		System.out.println("Brand: " + car.getBrand());
+		System.out.println("Model: " + car.getModel());
+		System.out.println("Price: " + car.getPrice());
+		System.out.println("Mileage: " + car.getMileage());
+		System.out.println("Availability: " + (car.isAvailability() ? "Available" : "Not Available"));
+		System.out.println("Deleted: " + (car.isDeleted() ? "Yes" : "No"));
+		System.out.println("--------------------------------------------------");
+	}
+
+	private static void printCustomerDetails(Customer customer) {
+		if (customer != null) {
+			System.out.println("----------------------------");
+			System.out.println("Customer Details:");
+			System.out.println("ID: " + customer.getCustomerId());
+			System.out.println("First Name: " + customer.getFirstName());
+			System.out.println("Last Name: " + customer.getLastName());
+			System.out.println("Email: " + customer.getEmail());
+			System.out.println("Phone Number: " + customer.getPhoneNumber());
+			System.out.println("Username: " + customer.getUsername());
+			// Do not print the password for security reasons
+			System.out.println("----------------------------");
+		} else {
+			System.out.println("Customer not found.");
+		}
+	}
+
 	private static void addCar(Scanner sc) throws SomethingWentWrongException {
 		System.out.print("Enter Car Brand: ");
 		String brand = sc.nextLine();
@@ -136,7 +168,11 @@ public class AdminUI {
 		Car car = new Car(brand, model, price, mileage, availability, isDeleted);
 		CarService carService = new CarServiceImpl();
 		try {
-			carService.addCar(car);
+			Car c2 = carService.addCar(car);
+			if (c2 != null) {
+				System.out.println("Car details added successfully.");
+				printCarDetails(car);
+			}
 		} catch (SomethingWentWrongException e) {
 			throw new SomethingWentWrongException("Something went wrong while adding the car inside the System.");
 		}
@@ -145,6 +181,7 @@ public class AdminUI {
 	private static void updateCar(Scanner sc) throws SomethingWentWrongException, CarNotAvailableException {
 		System.out.print("Enter Car ID to update: ");
 		long carId = sc.nextLong();
+		sc.nextLine();
 
 		System.out.print("Enter Car Brand: ");
 		String brand = sc.nextLine();
@@ -168,7 +205,11 @@ public class AdminUI {
 		car.setCarId(carId);
 		CarService carService = new CarServiceImpl();
 		try {
-			carService.updateCar(car);
+			Car c2 = carService.updateCar(car);
+			if (c2 != null) {
+				System.out.println("Car details Updated successfully.");
+				printCarDetails(car);
+			}
 		} catch (SomethingWentWrongException e) {
 			throw new CarNotAvailableException("Car was not fount in the System.");
 		}
@@ -180,21 +221,27 @@ public class AdminUI {
 		CarService carService = new CarServiceImpl();
 		try {
 			carService.deleteCar(carId);
+			System.out.println("------------------------------------------");
+			System.out.println("Car has been deleted from the system.");
+			System.out.println("------------------------------------------");
 		} catch (SomethingWentWrongException e) {
 			throw new CarNotAvailableException("Car was not fount in the System.");
 		}
 	}
 
-	private static void getAllCars() throws SomethingWentWrongException {
+	public static void getAllCars() throws SomethingWentWrongException {
 		CarService carService = new CarServiceImpl();
 		try {
-			carService.getAllCars();
+			List<Car> list = carService.getAllCars();
+			for (Car car : list) {
+				printCarDetails(car);
+			}
 		} catch (Exception e) {
 			throw new SomethingWentWrongException("Some thing went wrong, Try again later.");
 		}
 	}
 
-	private static void addCustomer(Scanner sc) {
+	public static void addCustomer(Scanner sc) {
 
 		System.out.print("Enter First Name: ");
 		String firstName = sc.nextLine();
@@ -218,7 +265,10 @@ public class AdminUI {
 
 		CustomerService cs = new CustomerServiceImpl();
 		try {
-			cs.addCustomer(customer);
+			Customer c1 = cs.addCustomer(customer);
+			System.out.println("Customer Added successfully.");
+			System.out.println();
+			printCustomerDetails(c1);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -227,6 +277,7 @@ public class AdminUI {
 	private static void updateCustomer(Scanner sc) {
 		System.out.print("Enter Customer ID to update: ");
 		long customerId = sc.nextLong();
+		sc.nextLine();
 
 		System.out.print("Enter First Name: ");
 		String firstName = sc.nextLine();
@@ -247,10 +298,13 @@ public class AdminUI {
 		String password = sc.nextLine();
 
 		Customer customer = new Customer(firstName, lastName, email, phoneNumber, username, password);
+		customer.setCustomerId(customerId);
 
 		CustomerService cs = new CustomerServiceImpl();
 		try {
-			cs.updateCustomer(customer);
+			Customer c1 = cs.updateCustomer(customer);
+			System.out.println("Customer updated successfully.");
+			printCustomerDetails(c1);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -264,6 +318,7 @@ public class AdminUI {
 		CustomerService cs = new CustomerServiceImpl();
 		try {
 			cs.deleteCustomer(customerId);
+			System.out.println("Customer Deleted Successfully.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -272,7 +327,10 @@ public class AdminUI {
 	private static void getAllCustomers() {
 		CustomerService cs = new CustomerServiceImpl();
 		try {
-			cs.getAllCustomers();
+			List<Customer> list = cs.getAllCustomers();
+			for (Customer c1 : list) {
+				printCustomerDetails(c1);
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -284,7 +342,8 @@ public class AdminUI {
 
 		CustomerService cs = new CustomerServiceImpl();
 		try {
-			cs.getCustomerById(customerId);
+			Customer c1 = cs.getCustomerById(customerId);
+			printCustomerDetails(c1);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -296,7 +355,8 @@ public class AdminUI {
 
 		CustomerService cs = new CustomerServiceImpl();
 		try {
-			cs.getCustomerByUsername(username);
+			Customer c1 = cs.getCustomerByUsername(username);
+			printCustomerDetails(c1);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -379,5 +439,23 @@ public class AdminUI {
 			System.out.println(e.getMessage());
 		}
 
+	}
+
+	public static void login(Scanner sc)
+			throws SomethingWentWrongException, CarNotAvailableException, NoRecordFoundException {
+		System.out.print("Enter admin username: ");
+		String username = sc.next();
+
+		System.out.print("Enter admin password: ");
+
+		String password = sc.next();
+
+		if (username.equals(Admin.USERNAME.getValue()) && password.equals(Admin.PASSWORD.getValue())) {
+			System.out.println("Admin login successfull !");
+			System.out.println("Welcome Ankit !");
+			System.out.println("-----------------------------------------------------------------------------");
+		} else {
+			System.out.println("Invalid username or password.");
+		}
 	}
 }

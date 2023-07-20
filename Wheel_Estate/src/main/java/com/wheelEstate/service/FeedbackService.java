@@ -13,11 +13,11 @@ public interface FeedbackService {
 
 	void deleteFeedback(Long feedbackId) throws NoRecordFoundException, SomethingWentWrongException;
 
-	List<Feedback> getAllFeedbacks();
+	List<Feedback> getAllFeedbacks() throws SomethingWentWrongException;
 
 	Feedback getFeedbackById(Long feedbackId) throws NoRecordFoundException;
 
-	List<Feedback> getFeedbacksByCustomer(Long customerId);
+	List<Feedback> getFeedbacksByCustomer(Long customerId) throws SomethingWentWrongException;
 
-	List<Feedback> getFeedbacksByCar(Long carId);
+	List<Feedback> getFeedbacksByCar(Long carId) throws NoRecordFoundException;
 }

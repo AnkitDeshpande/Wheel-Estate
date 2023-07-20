@@ -26,25 +26,26 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public List<Reservation> getAllReservations() {
+	public List<Reservation> getAllReservations() throws SomethingWentWrongException {
 		ReservationDAO rd = new ReservartionDAOImpl();
 		return rd.getAllReservations();
 	}
 
 	@Override
-	public List<Reservation> getReservationsByCustomer(Long customerId) {
+	public List<Reservation> getReservationsByCustomer(Long customerId) throws NoRecordFoundException {
 		ReservationDAO rd = new ReservartionDAOImpl();
 		return rd.getReservationsByCustomer(customerId);
 	}
 
 	@Override
-	public List<Reservation> getReservationsByCar(Long carId) {
+	public List<Reservation> getReservationsByCar(Long carId) throws NoRecordFoundException {
 		ReservationDAO rd = new ReservartionDAOImpl();
 		return rd.getReservationsByCar(carId);
 	}
 
 	@Override
-	public List<Reservation> getReservationsBetweenDates(LocalDate startDate, LocalDate endDate) {
+	public List<Reservation> getReservationsBetweenDates(LocalDate startDate, LocalDate endDate)
+			throws SomethingWentWrongException {
 		ReservationDAO rd = new ReservartionDAOImpl();
 		return rd.getReservationsBetweenDates(startDate, endDate);
 	}

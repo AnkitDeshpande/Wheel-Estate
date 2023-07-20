@@ -14,13 +14,13 @@ public interface CarDAO {
 
 	void deleteCar(Long carId) throws NoRecordFoundException, SomethingWentWrongException;
 
-	List<Car> getAllCars();
+	List<Car> getAllCars() throws SomethingWentWrongException;
 
 	Car getCarById(Long carId) throws NoRecordFoundException;
 
-	List<Car> searchCarsByBrand(String brand);
+	List<Car> searchCarsByBrand(String brand) throws SomethingWentWrongException;
 
-	List<Car> searchCarsByModel(String model);
+	List<Car> searchCarsByModel(String model) throws NoRecordFoundException;
 
-	List<Car> searchCarsByYear(int year);
+	List<Car> searchCarsByPrice(double start, double end) throws SomethingWentWrongException;
 }

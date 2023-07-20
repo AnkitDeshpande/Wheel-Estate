@@ -13,13 +13,14 @@ public interface ReservationDAO {
 
     void cancelReservation(Long reservationId) throws NoRecordFoundException, SomethingWentWrongException;
 
-    List<Reservation> getAllReservations();
+    List<Reservation> getAllReservations() throws SomethingWentWrongException;
 
     Reservation getReservationById(Long reservationId) throws NoRecordFoundException;
 
-    List<Reservation> getReservationsByCustomer(Long customerId);
+	List<Reservation> getReservationsByCustomer(Long customerId) throws NoRecordFoundException;
 
-    List<Reservation> getReservationsByCar(Long carId);
+	List<Reservation> getReservationsByCar(Long carId) throws NoRecordFoundException;
 
-    List<Reservation> getReservationsBetweenDates(LocalDate startDate, LocalDate endDate);
+	List<Reservation> getReservationsBetweenDates(LocalDate startDate, LocalDate endDate)
+			throws SomethingWentWrongException;
 }

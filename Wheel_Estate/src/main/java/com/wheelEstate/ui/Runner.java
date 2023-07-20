@@ -3,10 +3,14 @@ package com.wheelEstate.ui;
 import java.util.Scanner;
 
 import com.wheelEstate.color.Console;
+import com.wheelEstate.exceptions.CarNotAvailableException;
+import com.wheelEstate.exceptions.NoRecordFoundException;
+import com.wheelEstate.exceptions.SomethingWentWrongException;
 
 public class Runner {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+			throws SomethingWentWrongException, CarNotAvailableException, NoRecordFoundException {
 		Scanner sc = new Scanner(System.in);
 
 		int choice = 0;
@@ -20,6 +24,7 @@ public class Runner {
 			System.out.print("Enter Selection: ");
 
 			choice = sc.nextInt();
+			
 			switch (choice) {
 			case 1:
 				AdminUI.login(sc);

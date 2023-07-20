@@ -30,7 +30,7 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public List<Car> getAllCars() {
+	public List<Car> getAllCars() throws SomethingWentWrongException {
 		CarDAO cd = new CarDAOImpl();
 		return cd.getAllCars();
 	}
@@ -42,21 +42,21 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public List<Car> searchCarsByBrand(String brand) {
+	public List<Car> searchCarsByBrand(String brand) throws SomethingWentWrongException {
 		CarDAO cd = new CarDAOImpl();
 		return cd.searchCarsByBrand(brand);
 	}
 
 	@Override
-	public List<Car> searchCarsByModel(String model) {
+	public List<Car> searchCarsByModel(String model) throws NoRecordFoundException {
 		CarDAO cd = new CarDAOImpl();
 		return cd.searchCarsByModel(model);
 	}
 
 	@Override
-	public List<Car> searchCarsByYear(int year) {
+	public List<Car> searchCarsByPrice(double start, double end) throws SomethingWentWrongException {
 		CarDAO cd = new CarDAOImpl();
-		return cd.searchCarsByYear(year);
+		return cd.searchCarsByPrice(start, end);
 	}
 
 }

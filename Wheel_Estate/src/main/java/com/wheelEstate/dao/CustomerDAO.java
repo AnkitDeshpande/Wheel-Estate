@@ -13,9 +13,11 @@ public interface CustomerDAO {
 
 	void deleteCustomer(Long customerId) throws NoRecordFoundException, SomethingWentWrongException;
 
-	List<Customer> getAllCustomers();
+	List<Customer> getAllCustomers() throws SomethingWentWrongException;
 
 	Customer getCustomerById(Long customerId) throws NoRecordFoundException;
 
 	Customer getCustomerByUsername(String username) throws NoRecordFoundException;
+
+	void login(String username, String password) throws SomethingWentWrongException;
 }

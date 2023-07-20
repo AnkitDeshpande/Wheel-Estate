@@ -23,7 +23,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<Payment> getAllPayments() {
+	public List<Payment> getAllPayments() throws SomethingWentWrongException {
 		PaymentDAO pd = new PaymentDAOImpl();
 		return pd.getAllPayments();
 	}
@@ -35,7 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<Payment> getPaymentsByReservation(Long reservationId) {
+	public List<Payment> getPaymentsByReservation(Long reservationId) throws SomethingWentWrongException {
 		PaymentDAO pd = new PaymentDAOImpl();
 		return pd.getPaymentsByReservation(reservationId);
 	}
