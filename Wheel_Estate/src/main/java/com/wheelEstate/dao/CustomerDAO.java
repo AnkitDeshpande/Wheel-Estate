@@ -3,6 +3,7 @@ package com.wheelEstate.dao;
 import java.util.List;
 
 import com.wheelEstate.entity.Customer;
+import com.wheelEstate.exceptions.LoginException;
 import com.wheelEstate.exceptions.NoRecordFoundException;
 import com.wheelEstate.exceptions.SomethingWentWrongException;
 
@@ -19,5 +20,5 @@ public interface CustomerDAO {
 
 	Customer getCustomerByUsername(String username) throws NoRecordFoundException;
 
-	void login(String username, String password) throws SomethingWentWrongException;
+	void login(String username, String password) throws SomethingWentWrongException, LoginException;
 }

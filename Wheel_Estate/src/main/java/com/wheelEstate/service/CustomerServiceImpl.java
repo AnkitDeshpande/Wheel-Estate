@@ -4,6 +4,7 @@ import java.util.List;
 import com.wheelEstate.dao.CustomerDAO;
 import com.wheelEstate.dao.CustomerDAOImpl;
 import com.wheelEstate.entity.Customer;
+import com.wheelEstate.exceptions.LoginException;
 import com.wheelEstate.exceptions.NoRecordFoundException;
 import com.wheelEstate.exceptions.SomethingWentWrongException;
 
@@ -46,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public void login(String username, String password) throws SomethingWentWrongException {
+	public void login(String username, String password) throws SomethingWentWrongException, LoginException {
 		CustomerDAO cd = new CustomerDAOImpl();
 		cd.login(username, password);
 

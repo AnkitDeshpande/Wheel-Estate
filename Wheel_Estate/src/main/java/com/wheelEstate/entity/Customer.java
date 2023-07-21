@@ -3,6 +3,7 @@ package com.wheelEstate.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,8 +35,14 @@ public class Customer {
 	@Column(nullable = false)
 	private String password;
 
-	@OneToMany(mappedBy = "customer")
+	@Column(nullable = false)
+	private boolean isDeleted = false;
+
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private Set<Reservation> reservations = new HashSet<>();
+
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	private Set<Feedback> feedbacks = new HashSet<>();
 
 	// Default constructor
 	public Customer() {
@@ -114,6 +121,22 @@ public class Customer {
 
 	public void setReservations(Set<Reservation> reservations) {
 		this.reservations = reservations;
+	}
+
+	public Set<Feedback> getFeedbacks() {
+		return feedbacks;
+	}
+
+	public void setFeedbacks(Set<Feedback> feedbacks) {
+		this.feedbacks = feedbacks;
+	}
+
+	public boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 }

@@ -21,5 +21,6 @@ public interface ReservationService {
 
 	List<Reservation> getReservationsByCar(Long carId) throws NoRecordFoundException;
 
-	List<Reservation> getReservationsBetweenDates(LocalDate startDate, LocalDate endDate) throws SomethingWentWrongException;
+	List<Reservation> getReservationsBetweenDates(LocalDate startDate, LocalDate endDate)
+			throws SomethingWentWrongException;
 }

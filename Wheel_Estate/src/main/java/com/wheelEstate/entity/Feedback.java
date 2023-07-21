@@ -79,4 +79,17 @@ public class Feedback {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+
+	public String getFeedbackDetails() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Feedback ID: ").append(this.feedbackId).append("\n");
+		sb.append("Car Id: ").append(this.car.getCarId()).append(" ").append("\n").append("Car: ")
+				.append(this.car.getBrand()).append(" ").append(this.car.getModel()).append("\n");
+		sb.append("Customer: ").append(this.customer.getFirstName()).append(" ").append(this.customer.getLastName())
+				.append("\n");
+		sb.append("Rating: ").append(this.rating).append("\n");
+		sb.append("Comments: ").append(this.comments != null ? this.comments : "N/A").append("\n");
+		sb.append("-------------------------------------------");
+		return sb.toString();
+	}
 }

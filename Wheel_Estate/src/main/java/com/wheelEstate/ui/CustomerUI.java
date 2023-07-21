@@ -2,6 +2,8 @@ package com.wheelEstate.ui;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Scanner;
 
 import com.wheelEstate.entity.Car;
@@ -10,6 +12,7 @@ import com.wheelEstate.entity.Feedback;
 import com.wheelEstate.entity.Payment;
 import com.wheelEstate.entity.Reservation;
 import com.wheelEstate.exceptions.CarNotAvailableException;
+import com.wheelEstate.exceptions.LoginException;
 import com.wheelEstate.exceptions.NoRecordFoundException;
 import com.wheelEstate.exceptions.SomethingWentWrongException;
 import com.wheelEstate.service.CarService;
@@ -28,14 +31,17 @@ public class CustomerUI {
 	static void displayCustomerMenu() {
 		System.out.println("╔═════════════ Customer Menu ══════════════╗");
 		System.out.println("║ 1. Search and Filter Cars                ║");
-		System.out.println("║ 2. View Rental Policies                  ║");
-		System.out.println("║ 3. Check Car Availability                ║");
-		System.out.println("║ 4. View Rental Charges                   ║");
-		System.out.println("║ 5. Add Payment Method                    ║");
-		System.out.println("║ 6. Filter Cars                           ║");
-		System.out.println("║ 7. Provide Feedback and Ratings          ║");
-		System.out.println("║ 8. Make Reservation                      ║");
-		System.out.println("║ 9. Cancel Reservation                    ║");
+		System.out.println("║ 2. Make Reservation                      ║");
+		System.out.println("║ 3. Cancel Reservation                    ║");
+		System.out.println("║ 4. view Reservations                     ║");
+		System.out.println("║ 5. Check Car Availability                ║");
+		System.out.println("║ 6. View Rental Charges                   ║");
+		System.out.println("║ 7. Make Payments                         ║");
+		System.out.println("║ 8. view Payment History                  ║");
+		System.out.println("║ 9. Provide Feedback and Ratings          ║");
+		System.out.println("║ 10. Edit Your Feedbacks and Rating       ║");
+		System.out.println("║ 11. View all Your Feedbacks and Rating   ║");
+		System.out.println("║ 12. View Rental Policies                 ║");
 		System.out.println("║ 0. Logout                                ║");
 		System.out.println("╚═════════════════════════════════════════=╝");
 	}
@@ -52,31 +58,37 @@ public class CustomerUI {
 				searchAndFilterCars(sc);
 				break;
 			case 2:
-				viewRentalPolicies();
-				break;
-			case 3:
-				checkCarAvailability(sc);
-				break;
-			case 4:
-				viewRentalCharges(sc);
-				break;
-			case 5:
-				addPaymentMethod(sc);
-				break;
-			case 6:
-				searchAndFilterCars(sc);
-				break;
-			case 7:
-				provideFeedbackAndRatings(sc);
-				break;
-			case 8:
 				makeReservation(sc);
 				break;
-			case 9:
+			case 3:
 				cancelReservation(sc);
 				break;
+			case 4:
+				viewReservation(sc);
+				break;
+			case 5:
+				checkCarAvailability(sc);
+				break;
+			case 6:
+				viewRentalCharges(sc);
+				break;
+			case 7:
+				addPaymentMethod(sc);
+				break;
+			case 8:
+				viewPaymentHistory(sc);
+				break;
+			case 9:
+				provideFeedbackAndRatings(sc);
+				break;
 			case 10:
-				// contactCustomerSupport(sc);
+				editFeedback(sc);
+				break;
+			case 11:
+				viewAllFeedback(sc);
+				break;
+			case 12:
+				viewRentalPolicies();
 				break;
 			case 0:
 				System.out.println("Logout Successfully");
@@ -87,7 +99,20 @@ public class CustomerUI {
 		} while (choice != 0);
 	}
 
-	private static void generateReceipt(Payment payment) {
+	private static void viewAllFeedback(Scanner sc) {
+		System.out.println("Enter your Customer Id :");
+		Long customerId = sc.nextLong();
+		try {
+			FeedbackService fs = new FeedbackServiceImpl();
+			List<Feedback> feeds = fs.getFeedbacksByCustomer(customerId);
+			feeds.forEach(f -> System.out.println(f.getFeedbackDetails()));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public static void generateReceipt(Payment payment) {
+		System.out.println("----------------------------");
 		System.out.println("Reservation Receipt:");
 		Reservation reservation = payment.getReservation();
 		System.out.println("Reservation ID: " + reservation.getReservationId());
@@ -125,7 +150,42 @@ public class CustomerUI {
 			}
 			Feedback feedback = new Feedback(car, cust, rating, comments);
 			FeedbackService fs = new FeedbackServiceImpl();
-			fs.addFeedback(feedback);
+			if (fs.addFeedback(feedback) != null) {
+				System.out.println("feedback added successfully.");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void editFeedback(Scanner sc) {
+		System.out.println("Enter feedback ID: ");
+		Long fId = sc.nextLong();
+		System.out.println("Enter Car ID for Feedback: ");
+		Long carId = sc.nextLong();
+		System.out.println("Enter Customer ID for Feedback: ");
+		Long customerId = sc.nextLong();
+		System.out.println("Enter Rating (1-5): ");
+		int rating = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Enter Comments: ");
+		String comments = sc.nextLine();
+
+		try {
+			CarService cs = new CarServiceImpl();
+			CustomerService ct = new CustomerServiceImpl();
+
+			Car car = cs.getCarById(carId);
+			Customer cust = ct.getCustomerById(customerId);
+			if (car == null || cust == null) {
+				throw new CarNotAvailableException("Car Not Found.");
+			}
+			Feedback feedback = new Feedback(car, cust, rating, comments);
+			feedback.setFeedbackId(fId);
+			FeedbackService fs = new FeedbackServiceImpl();
+			if (fs.updateFeedback(feedback) != null) {
+				System.out.println("feedback Edited successfully.");
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -142,12 +202,17 @@ public class CustomerUI {
 				System.out.println("Reservation not found with the given ID");
 				return;
 			}
-			System.out.println("Enter Payment Date (YYYY-MM-DD): ");
-			String paymentDateStr = sc.next();
-			LocalDate paymentDate = LocalDate.parse(paymentDateStr);
+			long durationInDays = ChronoUnit.DAYS.between(reservation.getStartDate(), reservation.getEndDate());
+			double totalAmount = reservation.getCar().getPrice() * durationInDays;
 
-			System.out.println("Enter Payment Amount: ");
-			BigDecimal amount = sc.nextBigDecimal();
+			System.out.println("You have to pay : " + totalAmount + " Rupees.");
+			System.out.println("Enter Payment Amount to be paid below: ");
+			double amount = sc.nextDouble();
+
+			if (amount < totalAmount) {
+				System.out.println("Please Enter the right amount.");
+				return;
+			}
 
 			sc.nextLine(); // Consume the newline character after reading the BigDecimal
 
@@ -155,9 +220,10 @@ public class CustomerUI {
 			String paymentMethod = sc.nextLine();
 
 			// Create a new Payment object with the provided data
-			Payment payment = new Payment(reservation, paymentDate, amount, paymentMethod);
+			Payment payment = new Payment(reservation, LocalDate.now(), BigDecimal.valueOf(totalAmount), paymentMethod);
 			PaymentService ps = new PaymentServiceImpl();
-			ps.makePayment(payment);
+			Payment payment1 = ps.makePayment(payment);
+			generateReceipt(payment1);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -179,13 +245,21 @@ public class CustomerUI {
 		System.out.println("Enter Car ID to check Availabilty: ");
 		Long carId = sc.nextLong();
 		try {
-			cs.getCarById(carId);
+			Car car = cs.getCarById(carId);
+			if (car != null && car.isAvailability()) {
+				AdminUI.printCarDetails(car);
+			} else {
+				System.out.println("Car is not available.");
+			}
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
 	private static void viewRentalPolicies() {
+		System.out
+				.println("-------------------------------------------------------------------------------------------");
 		System.out.println("Rental Policies:");
 		System.out.println("1. Minimum rental duration: 3 days");
 		System.out.println("2. Maximum rental duration: 30 days");
@@ -203,14 +277,19 @@ public class CustomerUI {
 		System.out.println("14. Insurance options: Various insurance coverage options available");
 		System.out.println("15. Early return policy: No refunds for early returns");
 		System.out.println("16. Reservation cancellation policy: Full refund if canceled 48 hours before pickup");
+		System.out
+				.println("-------------------------------------------------------------------------------------------");
 	}
 
 	private static void searchAndFilterCars(Scanner sc) throws SomethingWentWrongException {
-		System.out.println("Search and Filter Cars:");
-		System.out.println("1. Search by Brand");
-		System.out.println("2. Search by Model");
-		System.out.println("3. Search by Price Range");
-		System.out.println("4. Show All Cars");
+		System.out.println("╔═════════════════════════════╗");
+		System.out.println("║  Search and Filter Cars:    ║");
+		System.out.println("╠═════════════════════════════╣");
+		System.out.println("║ 1. Search by Brand          ║");
+		System.out.println("║ 2. Search by Model          ║");
+		System.out.println("║ 3. Search by Price Range    ║");
+		System.out.println("║ 4. Show All Cars            ║");
+		System.out.println("╚═════════════════════════════╝");
 
 		System.out.print("Enter selection: ");
 		int option = sc.nextInt();
@@ -238,7 +317,8 @@ public class CustomerUI {
 		String brand = sc.next();
 		CarService cs = new CarServiceImpl();
 		try {
-			cs.searchCarsByBrand(brand);
+			List<Car> cars = cs.searchCarsByBrand(brand);
+			cars.forEach(c -> AdminUI.printCarDetails(c));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -249,7 +329,8 @@ public class CustomerUI {
 		String model = sc.next();
 		CarService cs = new CarServiceImpl();
 		try {
-			cs.searchCarsByModel(model);
+			List<Car> cars = cs.searchCarsByModel(model);
+			cars.forEach(c -> AdminUI.printCarDetails(c));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -262,7 +343,8 @@ public class CustomerUI {
 		double end = sc.nextDouble();
 		CarService cs = new CarServiceImpl();
 		try {
-			cs.searchCarsByPrice(start, end);
+			List<Car> cars = cs.searchCarsByPrice(start, end);
+			cars.forEach(c -> AdminUI.printCarDetails(c));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -273,7 +355,7 @@ public class CustomerUI {
 		try {
 			System.out.print("Enter Car ID for Reservation: ");
 			Long carId = sc.nextLong();
-			System.out.println("Enter Customer ID for Feedback: ");
+			System.out.println("Enter Customer ID for reservation: ");
 			Long customerId = sc.nextLong();
 
 			CarService cs = new CarServiceImpl();
@@ -298,7 +380,8 @@ public class CustomerUI {
 			LocalDate endDate = LocalDate.parse(endDateStr);
 			Reservation reserve = new Reservation(car, cust, startDate, endDate, false);
 			ReservationService rs = new ReservationServiceImpl();
-			rs.makeReservation(null);
+			Reservation reservation = rs.makeReservation(reserve);
+			reservation.printReservationDetails();
 		} catch (NoRecordFoundException e) {
 			System.out.println(e.getMessage());
 		}
@@ -308,16 +391,37 @@ public class CustomerUI {
 		System.out.println("Enter Reservation ID for cancellation: ");
 		Long reservationId = sc.nextLong();
 		ReservationService rs = new ReservationServiceImpl();
-		Reservation reservation = rs.getReservationById(reservationId);
-		if (reservation == null) {
-			System.out.println("Reservation not found with the given ID");
-			return;
-		} else {
-			try {
-				rs.cancelReservation(reservationId);
-			} catch (NoRecordFoundException | SomethingWentWrongException e) {
-				System.out.println(e.getMessage());
-			}
+		try {
+			rs.cancelReservation(reservationId);
+			System.out.println("Reservation Cancelled.");
+		} catch (NoRecordFoundException | SomethingWentWrongException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void viewReservation(Scanner sc) {
+		System.out.print("Enter Customer ID: ");
+		Long customerId = sc.nextLong();
+		ReservationService rs = new ReservationServiceImpl();
+		try {
+			List<Reservation> revs = rs.getReservationsByCustomer(customerId);
+			revs.forEach(r -> r.printReservationDetails());
+		} catch (NoRecordFoundException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	private static void viewPaymentHistory(Scanner sc) {
+		System.out.print("Enter Customer ID: ");
+		Long customerId = sc.nextLong();
+		PaymentService ps = new PaymentServiceImpl();
+
+		try {
+			List<Payment> payments = ps.getPaymentsByReservation(customerId);
+			payments.forEach(p -> generateReceipt(p));
+		} catch (SomethingWentWrongException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -326,7 +430,17 @@ public class CustomerUI {
 		String username = sc.next();
 		System.out.println("Enter Password : ");
 		String password = sc.next();
-
+		CustomerService cs = new CustomerServiceImpl();
+		try {
+			cs.login(username, password);
+			try {
+				CustomerUI.customerMenu(sc);
+			} catch (CarNotAvailableException | NoRecordFoundException e) {
+				e.printStackTrace();
+			}
+		} catch (SomethingWentWrongException | LoginException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public static void customerRegister(Scanner sc) {
