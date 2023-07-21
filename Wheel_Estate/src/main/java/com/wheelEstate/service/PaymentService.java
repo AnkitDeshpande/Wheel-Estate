@@ -15,5 +15,5 @@ public interface PaymentService {
 
 	Payment getPaymentById(Long paymentId) throws NoRecordFoundException;
 
-	List<Payment> getPaymentsByReservation(Long reservationId) throws SomethingWentWrongException;
+	List<Payment> getPaymentsByReservation(Long customerId) throws SomethingWentWrongException;
 }

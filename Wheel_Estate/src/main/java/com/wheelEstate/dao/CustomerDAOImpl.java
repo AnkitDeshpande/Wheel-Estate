@@ -5,6 +5,7 @@ import java.util.List;
 import com.wheelEstate.Utility.Util;
 import com.wheelEstate.entity.Car;
 import com.wheelEstate.entity.Customer;
+import com.wheelEstate.exceptions.LoginException;
 import com.wheelEstate.exceptions.NoRecordFoundException;
 import com.wheelEstate.exceptions.SomethingWentWrongException;
 import com.wheelEstate.ui.Runner;
@@ -13,7 +14,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
-public class CustomerDAOImpl implements CustomerDAO {
+public class CustomerDAOImpl implements CustomerDAO { // this also done
 
 	@Override
 	public Customer addCustomer(Customer customer) throws SomethingWentWrongException {
@@ -74,7 +75,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 			Customer customer = em.find(Customer.class, customerId);
 			et.begin();
 			if (customer != null) {
-				em.remove(customer);
+
+				customer.setDeleted(true);
+				em.merge(customer);
 				et.commit();
 			} else {
 				throw new NoRecordFoundException("No record found with the given ID : " + customerId);
@@ -149,39 +152,52 @@ public class CustomerDAOImpl implements CustomerDAO {
 			em = Util.getEm();
 			et = em.getTransaction();
 
-			Customer customer = em.find(Customer.class, username);
+			String jpql = "SELECT c FROM Customer c WHERE c.username = :username";
+			Query query = em.createQuery(jpql);
+			query.setParameter("username", username);
+
+			Customer customer = (Customer) query.getSingleResult();
+
 			et.begin();
 			if (customer != null) {
 				et.commit();
 				return customer;
 			} else {
-				throw new NoRecordFoundException("No record found with the given username : " + username);
+				throw new NoRecordFoundException("No record found with the given username: " + username);
 			}
 
 		} catch (Exception e) {
 			et.rollback();
-			throw new NoRecordFoundException("Something went wrong while adding Details. Try again later.");
+			throw new NoRecordFoundException("Something went wrong while Getting Details. Try again later.");
 		} finally {
 			em.close();
 		}
 	}
 
 	@Override
-	public void login(String username, String password) throws SomethingWentWrongException {
+	public void login(String username, String password) throws SomethingWentWrongException, LoginException {
 		EntityManager em = null;
-		EntityTransaction et = null;
 
 		try {
 			em = Util.getEm();
-			et = em.getTransaction();
 
-			et.begin();
+			// Retrieve the customer by username from the database
+			Query query = em.createQuery("SELECT c FROM Customer c WHERE c.username = :username");
+			query.setParameter("username", username);
+			Customer customer = (Customer) query.getSingleResult();
 
-			et.commit();
+			// Check if the provided password matches the customer's password
+			if (customer != null && customer.getPassword().equals(password)) {
+				// Perform any additional login-related actions here
+				System.out.println("Login successful!");
+			} else {
+				// Invalid credentials
+				System.out.println("Invalid username or password. Please try again.");
+			}
 
 		} catch (Exception e) {
-			et.rollback();
-			throw new SomethingWentWrongException("Something went wrong while adding Details. Try again later.");
+			e.printStackTrace();
+			throw new LoginException("No user found with the given username. Please try again.");
 		} finally {
 			em.close();
 		}

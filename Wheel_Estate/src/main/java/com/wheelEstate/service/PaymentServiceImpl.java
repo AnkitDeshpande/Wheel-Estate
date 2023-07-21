@@ -35,9 +35,9 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<Payment> getPaymentsByReservation(Long reservationId) throws SomethingWentWrongException {
+	public List<Payment> getPaymentsByReservation(Long customerId) throws SomethingWentWrongException {
 		PaymentDAO pd = new PaymentDAOImpl();
-		return pd.getPaymentsByReservation(reservationId);
+		return pd.getPaymentsByReservation(customerId);
 	}
 
 }

@@ -12,7 +12,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
-public class CarDAOImpl implements CarDAO {
+public class CarDAOImpl implements CarDAO { // this class is done without errors
 
 	@Override
 	public Car addCar(Car car) throws SomethingWentWrongException {
@@ -80,7 +80,9 @@ public class CarDAOImpl implements CarDAO {
 
 		} catch (Exception e) {
 			et.rollback();
-			throw new NoRecordFoundException("Something went wrong while adding Details. Try again later.");
+			// throw new NoRecordFoundException("Something went wrong while adding Details.
+			// Try again later.");
+			e.printStackTrace();
 		} finally {
 			em.close();
 		}
@@ -107,7 +109,7 @@ public class CarDAOImpl implements CarDAO {
 
 		} catch (Exception e) {
 			et.rollback();
-			throw new SomethingWentWrongException("Something went wrong while adding Details. Try again later.");
+			throw new SomethingWentWrongException("Something went wrong while fetching car Details. Try again later.");
 		} finally {
 			em.close();
 		}
@@ -141,67 +143,53 @@ public class CarDAOImpl implements CarDAO {
 	@Override
 	public List<Car> searchCarsByBrand(String brand) throws SomethingWentWrongException {
 		EntityManager em = null;
-		EntityTransaction et = null;
-
 		try {
 			em = Util.getEm();
-			et = em.getTransaction();
-
-			et.begin();
-
-			et.commit();
-
+			Query query = em.createQuery("SELECT c FROM Car c WHERE c.brand = :brand");
+			query.setParameter("brand", brand);
+			return query.getResultList();
 		} catch (Exception e) {
-			et.rollback();
-			throw new SomethingWentWrongException("Something went wrong while adding Details. Try again later.");
+			throw new SomethingWentWrongException("Something went wrong while fetching car details. Try again later.");
 		} finally {
 			em.close();
+
 		}
-		return null;
 	}
 
 	@Override
 	public List<Car> searchCarsByModel(String model) throws NoRecordFoundException {
 		EntityManager em = null;
-		EntityTransaction et = null;
-
 		try {
 			em = Util.getEm();
-			et = em.getTransaction();
-
-			et.begin();
-
-			et.commit();
-
-		} catch (Exception e) {
-			et.rollback();
-			throw new NoRecordFoundException("Something went wrong while adding Details. Try again later.");
+			Query query = em.createQuery("SELECT c FROM Car c WHERE c.model = :model");
+			query.setParameter("model", model);
+			List<Car> cars = query.getResultList();
+			if (cars.isEmpty()) {
+				throw new NoRecordFoundException("No cars found with the given model: " + model);
+			}
+			return cars;
+		} catch (NoRecordFoundException e) {
+			throw new NoRecordFoundException("No cars found with the given model: " + model);
 		} finally {
 			em.close();
+
 		}
-		return null;
 	}
 
 	@Override
 	public List<Car> searchCarsByPrice(double start, double end) throws SomethingWentWrongException {
 		EntityManager em = null;
-		EntityTransaction et = null;
-
 		try {
 			em = Util.getEm();
-			et = em.getTransaction();
-
-			et.begin();
-
-			et.commit();
-
+			Query query = em.createQuery("SELECT c FROM Car c WHERE c.price BETWEEN :start AND :end");
+			query.setParameter("start", start);
+			query.setParameter("end", end);
+			return query.getResultList();
 		} catch (Exception e) {
-			et.rollback();
-			throw new SomethingWentWrongException("Something went wrong while adding Details. Try again later.");
+			throw new SomethingWentWrongException("Something went wrong while fetching car details. Try again later.");
 		} finally {
 			em.close();
 		}
-		return null;
 	}
 
 }

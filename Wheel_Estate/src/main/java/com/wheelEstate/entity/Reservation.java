@@ -107,4 +107,20 @@ public class Reservation {
 		this.payment = payment;
 	}
 
+	public void printReservationDetails() {
+		System.out.println("---------------------------------------------------------");
+		System.out.println("Reservation ID: " + this.getReservationId());
+		System.out.println("Car ID: " + this.getCar().getCarId());
+		System.out.println("Customer ID: " + this.getCustomer().getCustomerId());
+		System.out.println("Start Date: " + this.getStartDate());
+		System.out.println("End Date: " + this.getEndDate());
+		System.out.println("Is Cancelled: " + this.isCancelled());
+		if (this.getPayment() != null) {
+			System.out.println("Payment ID: " + this.getPayment().getPaymentId());
+		} else {
+			System.out.println("Payment: Pending");
+		}
+		System.out.println("---------------------------------------------------------");
+	}
+
 }

@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 import com.wheelEstate.entity.Car;
 import com.wheelEstate.entity.Customer;
+import com.wheelEstate.entity.Feedback;
+import com.wheelEstate.entity.Payment;
+import com.wheelEstate.entity.Reservation;
 import com.wheelEstate.enums.Admin;
 import com.wheelEstate.exceptions.CarNotAvailableException;
 import com.wheelEstate.exceptions.NoRecordFoundException;
@@ -25,15 +28,15 @@ import com.wheelEstate.service.ReservationServiceImpl;
 public class AdminUI {
 
 	static void displayAdminMenu() {
-		System.out.println("╔═══════════════ Admin Menu ═══════════════╗");
-		System.out.println("║ 1. Add Car                               ║");
-		System.out.println("║ 2. Update Car                            ║");
-		System.out.println("║ 3. Delete Car                            ║");
-		System.out.println("║ 4. Get All Cars                          ║");
+		System.out.println("╔═══════════════ Admin Menu ══════════════╗");
+		System.out.println("║ 1. Add Car                              ║");
+		System.out.println("║ 2. Update Car                           ║");
+		System.out.println("║ 3. Delete Car                           ║");
+		System.out.println("║ 4. Get All Cars                         ║");
 		System.out.println("║ 5. Add Customer                         ║");
 		System.out.println("║ 6. Update Customer                      ║");
 		System.out.println("║ 7. Delete Customer                      ║");
-		System.out.println("║ 8. Get All Customers                     ║");
+		System.out.println("║ 8. Get All Customers                    ║");
 		System.out.println("║ 9. Get Customer By ID                   ║");
 		System.out.println("║ 10. Get Customer By Username            ║");
 		System.out.println("║ 11. Get All Feedbacks                   ║");
@@ -43,7 +46,7 @@ public class AdminUI {
 		System.out.println("║ 15. Get All Payments                    ║");
 		System.out.println("║ 16. Get All Reservations                ║");
 		System.out.println("║ 17. Get Reservations Between Dates      ║");
-		System.out.println("║ 0. Logout                                ║");
+		System.out.println("║ 0. Logout                               ║");
 		System.out.println("╚═════════════════════════════════════════╝");
 	}
 
@@ -116,7 +119,7 @@ public class AdminUI {
 		} while (choice != 0);
 	}
 
-	private static void printCarDetails(Car car) {
+	public static void printCarDetails(Car car) {
 		System.out.println("--------------------------------------------------");
 		System.out.println("Car Details:");
 		System.out.println("ID: " + car.getCarId());
@@ -129,7 +132,7 @@ public class AdminUI {
 		System.out.println("--------------------------------------------------");
 	}
 
-	private static void printCustomerDetails(Customer customer) {
+	public static void printCustomerDetails(Customer customer) {
 		if (customer != null) {
 			System.out.println("----------------------------");
 			System.out.println("Customer Details:");
@@ -365,7 +368,8 @@ public class AdminUI {
 	private static void getAllFeedbacks() {
 		FeedbackService fs = new FeedbackServiceImpl();
 		try {
-			fs.getAllFeedbacks();
+			List<Feedback> feedbacks = fs.getAllFeedbacks();
+			feedbacks.forEach(f -> System.out.println(f.getFeedbackDetails()));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -377,7 +381,8 @@ public class AdminUI {
 
 		FeedbackService fs = new FeedbackServiceImpl();
 		try {
-			fs.getFeedbackById(feedbackId);
+			Feedback f = fs.getFeedbackById(feedbackId);
+			System.out.println(f.getFeedbackDetails());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -389,7 +394,8 @@ public class AdminUI {
 
 		FeedbackService fs = new FeedbackServiceImpl();
 		try {
-			fs.getFeedbacksByCustomer(customerId);
+			List<Feedback> feedbacks = fs.getFeedbacksByCustomer(customerId);
+			feedbacks.forEach(f -> System.out.println(f.getFeedbackDetails()));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -401,7 +407,8 @@ public class AdminUI {
 
 		FeedbackService fs = new FeedbackServiceImpl();
 		try {
-			fs.getFeedbacksByCar(carId);
+			List<Feedback> feedbacks = fs.getFeedbacksByCar(carId);
+			feedbacks.forEach(f -> System.out.println(f.getFeedbackDetails()));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -410,7 +417,8 @@ public class AdminUI {
 	private static void getAllPayments() {
 		PaymentService ps = new PaymentServiceImpl();
 		try {
-			ps.getAllPayments();
+			List<Payment> payments = ps.getAllPayments();
+			payments.forEach(p -> CustomerUI.generateReceipt(p));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -419,7 +427,8 @@ public class AdminUI {
 	private static void getAllReservations() {
 		ReservationService rs = new ReservationServiceImpl();
 		try {
-			rs.getAllReservations();
+			List<Reservation> revs = rs.getAllReservations();
+			revs.forEach(r -> r.printReservationDetails());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -434,7 +443,9 @@ public class AdminUI {
 
 		ReservationService rs = new ReservationServiceImpl();
 		try {
-			rs.getReservationsBetweenDates(LocalDate.parse(startDate), LocalDate.parse(endDate));
+			List<Reservation> revs = rs.getReservationsBetweenDates(LocalDate.parse(startDate),
+					LocalDate.parse(endDate));
+			revs.forEach(r -> r.printReservationDetails());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

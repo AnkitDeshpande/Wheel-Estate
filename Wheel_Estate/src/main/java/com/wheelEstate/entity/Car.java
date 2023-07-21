@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,10 +36,10 @@ public class Car {
 	@Column(nullable = false)
 	private boolean isDeleted;
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
 	private Set<Reservation> reservations = new HashSet<>();
 
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
 	private Set<Feedback> feedbacks = new HashSet<>();
 
 	// Default constructor
