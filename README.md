@@ -57,7 +57,6 @@ Wheel Estate is a car rental service that provides customers with the convenienc
 - Java Persistence API (JPA) for database operations
 - MySQL Database for data storage
 - Hibernate ORM for mapping Java objects to the database
-- HTML, CSS, and JavaScript for the frontend interface
 
 ## How to Run the Application
 
