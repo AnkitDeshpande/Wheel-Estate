@@ -24,7 +24,7 @@ public class Runner {
 			System.out.print("Enter Selection: ");
 
 			choice = sc.nextInt();
-			
+
 			switch (choice) {
 			case 1:
 				AdminUI.login(sc);
@@ -37,10 +37,10 @@ public class Runner {
 				CustomerUI.customerRegister(sc);
 				break;
 			case 0:
-				System.out.println("Thanks for using the services");
+				System.out.println("Thanks for using the services.");
 				break;
 			default:
-				System.out.println("Invalid Selection, try again");
+				System.out.println("Invalid Selection, try again.");
 			}
 		} while (choice != 0);
 		sc.close();

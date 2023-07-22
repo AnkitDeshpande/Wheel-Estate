@@ -14,8 +14,20 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
+/**
+ * This class implements the CustomerDAO interface and provides methods to
+ * interact with the database to perform CRUD operations for Customer entities.
+ */
 public class CustomerDAOImpl implements CustomerDAO { // this also done
 
+	/**
+	 * Adds a new Customer entity to the database.
+	 *
+	 * @param customer The Customer entity to be added.
+	 * @return The Customer entity that was added to the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public Customer addCustomer(Customer customer) throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -37,6 +49,14 @@ public class CustomerDAOImpl implements CustomerDAO { // this also done
 		}
 	}
 
+	/**
+	 * Updates the details of an existing Customer entity in the database.
+	 *
+	 * @param customer The Customer entity containing updated details.
+	 * @return The updated Customer entity.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public Customer updateCustomer(Customer customer) throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -64,6 +84,15 @@ public class CustomerDAOImpl implements CustomerDAO { // this also done
 		}
 	}
 
+	/**
+	 * Deletes a Customer entity from the database based on the given customerId.
+	 *
+	 * @param customerId The ID of the Customer entity to be deleted.
+	 * @throws NoRecordFoundException      If no Customer entity is found with the
+	 *                                     given customerId in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public void deleteCustomer(Long customerId) throws NoRecordFoundException, SomethingWentWrongException {
 		EntityManager em = null;
@@ -92,6 +121,13 @@ public class CustomerDAOImpl implements CustomerDAO { // this also done
 
 	}
 
+	/**
+	 * Retrieves a list of all Customer entities from the database.
+	 *
+	 * @return A list of all Customer entities in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Customer> getAllCustomers() throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -118,6 +154,15 @@ public class CustomerDAOImpl implements CustomerDAO { // this also done
 		}
 	}
 
+	/**
+	 * Retrieves a specific Customer entity from the database based on the given
+	 * customerId.
+	 *
+	 * @param customerId The ID of the Customer entity to be retrieved.
+	 * @return The Customer entity with the specified customerId.
+	 * @throws NoRecordFoundException If no Customer entity is found with the given
+	 *                                customerId in the database.
+	 */
 	@Override
 	public Customer getCustomerById(Long customerId) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -143,6 +188,15 @@ public class CustomerDAOImpl implements CustomerDAO { // this also done
 		}
 	}
 
+	/**
+	 * Retrieves a specific Customer entity from the database based on the given
+	 * username.
+	 *
+	 * @param username The username of the Customer entity to be retrieved.
+	 * @return The Customer entity with the specified username.
+	 * @throws NoRecordFoundException If no Customer entity is found with the given
+	 *                                username in the database.
+	 */
 	@Override
 	public Customer getCustomerByUsername(String username) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -174,6 +228,16 @@ public class CustomerDAOImpl implements CustomerDAO { // this also done
 		}
 	}
 
+	/**
+	 * Validates the login credentials for a Customer entity in the database.
+	 *
+	 * @param username The username of the Customer trying to log in.
+	 * @param password The password of the Customer trying to log in.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 * @throws LoginException              If the provided username or password is
+	 *                                     incorrect.
+	 */
 	@Override
 	public void login(String username, String password) throws SomethingWentWrongException, LoginException {
 		EntityManager em = null;

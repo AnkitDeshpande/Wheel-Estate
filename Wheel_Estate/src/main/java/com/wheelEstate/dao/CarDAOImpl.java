@@ -12,8 +12,20 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
+/**
+ * This class implements the CarDAO interface and provides methods to interact
+ * with the database to perform CRUD operations for Car entities.
+ */
 public class CarDAOImpl implements CarDAO { // this class is done without errors
 
+	/**
+	 * Adds a new Car entity to the database.
+	 *
+	 * @param car The Car entity to be added.
+	 * @return The Car entity that was added to the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public Car addCar(Car car) throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -35,6 +47,16 @@ public class CarDAOImpl implements CarDAO { // this class is done without errors
 		}
 	}
 
+	/**
+	 * Updates the details of an existing Car entity in the database.
+	 *
+	 * @param cr The Car entity containing updated details.
+	 * @return The updated Car entity.
+	 * @throws CarNotAvailableException    If the Car with the specified ID is not
+	 *                                     available in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public Car updateCar(Car cr) throws CarNotAvailableException, SomethingWentWrongException {
 		EntityManager em = null;
@@ -61,6 +83,15 @@ public class CarDAOImpl implements CarDAO { // this class is done without errors
 		}
 	}
 
+	/**
+	 * Deletes a Car entity from the database based on the given carId.
+	 *
+	 * @param carId The ID of the Car entity to be deleted.
+	 * @throws NoRecordFoundException      If no Car entity is found with the given
+	 *                                     carId in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public void deleteCar(Long carId) throws NoRecordFoundException, SomethingWentWrongException {
 		EntityManager em = null;
@@ -89,6 +120,13 @@ public class CarDAOImpl implements CarDAO { // this class is done without errors
 
 	}
 
+	/**
+	 * Retrieves a list of all Car entities from the database.
+	 *
+	 * @return A list of all Car entities in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Car> getAllCars() throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -115,6 +153,14 @@ public class CarDAOImpl implements CarDAO { // this class is done without errors
 		}
 	}
 
+	/**
+	 * Retrieves a specific Car entity from the database based on the given carId.
+	 *
+	 * @param carId The ID of the Car entity to be retrieved.
+	 * @return The Car entity with the specified carId.
+	 * @throws NoRecordFoundException If no Car entity is found with the given carId
+	 *                                in the database.
+	 */
 	@Override
 	public Car getCarById(Long carId) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -140,6 +186,14 @@ public class CarDAOImpl implements CarDAO { // this class is done without errors
 		}
 	}
 
+	/**
+	 * Searches for Car entities in the database based on the specified brand name.
+	 *
+	 * @param brand The brand name of the Car entities to be searched for.
+	 * @return A list of Car entities matching the specified brand name.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Car> searchCarsByBrand(String brand) throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -156,6 +210,14 @@ public class CarDAOImpl implements CarDAO { // this class is done without errors
 		}
 	}
 
+	/**
+	 * Searches for Car entities in the database based on the specified model name.
+	 *
+	 * @param model The model name of the Car entities to be searched for.
+	 * @return A list of Car entities matching the specified model name.
+	 * @throws NoRecordFoundException If no Car entity is found with the given model
+	 *                                name in the database.
+	 */
 	@Override
 	public List<Car> searchCarsByModel(String model) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -176,6 +238,15 @@ public class CarDAOImpl implements CarDAO { // this class is done without errors
 		}
 	}
 
+	/**
+	 * Searches for Car entities in the database based on the specified price range.
+	 *
+	 * @param start The starting price of the Car entities to be searched for.
+	 * @param end   The ending price of the Car entities to be searched for.
+	 * @return A list of Car entities matching the specified price range.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Car> searchCarsByPrice(double start, double end) throws SomethingWentWrongException {
 		EntityManager em = null;
