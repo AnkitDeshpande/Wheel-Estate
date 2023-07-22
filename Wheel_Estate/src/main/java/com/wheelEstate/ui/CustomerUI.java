@@ -26,8 +26,17 @@ import com.wheelEstate.service.PaymentServiceImpl;
 import com.wheelEstate.service.ReservationService;
 import com.wheelEstate.service.ReservationServiceImpl;
 
+
+/**
+ * The CustomerUI class provides a user interface for interacting with the car rental system as a customer.
+ * It allows customers to search for cars, make reservations, view reservations, make payments, provide feedback, and more.
+ */
 public class CustomerUI {
 
+	
+	/**
+     * Displays the customer menu with various options for the customer to choose from.
+     */
 	static void displayCustomerMenu() {
 		System.out.println("╔═════════════ Customer Menu ══════════════╗");
 		System.out.println("║ 1. Search and Filter Cars                ║");
@@ -46,6 +55,15 @@ public class CustomerUI {
 		System.out.println("╚═════════════════════════════════════════=╝");
 	}
 
+	
+	/**
+     * Handles the customer menu interactions based on the user's selected choice.
+     *
+     * @param sc Scanner object to read user input.
+     * @throws SomethingWentWrongException When an unexpected error occurs during the operation.
+     * @throws CarNotAvailableException When a requested car is not available for reservation.
+     * @throws NoRecordFoundException When no record is found for the given input.
+     */
 	static void customerMenu(Scanner sc)
 			throws SomethingWentWrongException, CarNotAvailableException, NoRecordFoundException {
 		int choice = 0;
@@ -99,6 +117,12 @@ public class CustomerUI {
 		} while (choice != 0);
 	}
 
+	
+	/**
+     * Displays all feedbacks and ratings given by the customer.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void viewAllFeedback(Scanner sc) {
 		System.out.println("Enter your Customer Id :");
 		Long customerId = sc.nextLong();
@@ -111,6 +135,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Generates a receipt for a payment made by the customer.
+     *
+     * @param payment The payment object for which the receipt needs to be generated.
+     */
 	public static void generateReceipt(Payment payment) {
 		System.out.println("----------------------------");
 		System.out.println("Reservation Receipt:");
@@ -128,6 +158,12 @@ public class CustomerUI {
 		System.out.println("----------------------------");
 	}
 
+	
+	/**
+     * Allows the customer to provide feedback and ratings for a specific car and customer.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void provideFeedbackAndRatings(Scanner sc) {
 		System.out.println("Enter Car ID for Feedback: ");
 		Long carId = sc.nextLong();
@@ -158,6 +194,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Allows the customer to edit their previously provided feedback and ratings.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void editFeedback(Scanner sc) {
 		System.out.println("Enter feedback ID: ");
 		Long fId = sc.nextLong();
@@ -191,6 +233,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	 /**
+     * Allows the customer to add a payment method and make payments for reservations.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void addPaymentMethod(Scanner sc) {
 
 		try {
@@ -231,6 +279,12 @@ public class CustomerUI {
 
 	}
 
+	
+	/**
+     * Displays the rental charges for all available cars.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void viewRentalCharges(Scanner sc) {
 		CarService cs = new CarServiceImpl();
 		try {
@@ -240,6 +294,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	 /**
+     * Checks the availability of a specific car.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void checkCarAvailability(Scanner sc) {
 		CarService cs = new CarServiceImpl();
 		System.out.println("Enter Car ID to check Availabilty: ");
@@ -257,6 +317,10 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Displays the rental policies for the car rental system.
+     */
 	private static void viewRentalPolicies() {
 		System.out
 				.println("-------------------------------------------------------------------------------------------");
@@ -281,6 +345,13 @@ public class CustomerUI {
 				.println("-------------------------------------------------------------------------------------------");
 	}
 
+	
+	 /**
+     * Allows the customer to search and filter cars based on various criteria.
+     *
+     * @param sc Scanner object to read user input.
+     * @throws SomethingWentWrongException When an unexpected error occurs during the operation.
+     */
 	private static void searchAndFilterCars(Scanner sc) throws SomethingWentWrongException {
 		System.out.println("╔═════════════════════════════╗");
 		System.out.println("║  Search and Filter Cars:    ║");
@@ -312,6 +383,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Searches for cars based on the provided brand.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void searchCarsByBrand(Scanner sc) {
 		System.out.print("Enter Brand: ");
 		String brand = sc.next();
@@ -324,6 +401,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Searches for cars based on the provided model.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void searchCarsByModel(Scanner sc) {
 		System.out.print("Enter Model: ");
 		String model = sc.next();
@@ -336,6 +419,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Searches for cars based on the provided price range.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void searchCarsByPrice(Scanner sc) {
 		System.out.print("Enter Start Price: ");
 		double start = sc.nextDouble();
@@ -350,6 +439,14 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Allows the customer to make a reservation for a car.
+     *
+     * @param sc Scanner object to read user input.
+     * @throws CarNotAvailableException When the requested car is not available for reservation.
+     * @throws SomethingWentWrongException When an unexpected error occurs during the operation.
+     */
 	private static void makeReservation(Scanner sc) throws CarNotAvailableException, SomethingWentWrongException {
 
 		try {
@@ -387,6 +484,13 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Allows the customer to cancel an existing reservation.
+     *
+     * @param sc Scanner object to read user input.
+     * @throws NoRecordFoundException When no reservation is found with the given ID.
+     */
 	private static void cancelReservation(Scanner sc) throws NoRecordFoundException {
 		System.out.println("Enter Reservation ID for cancellation: ");
 		Long reservationId = sc.nextLong();
@@ -399,6 +503,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Displays all reservations made by the customer.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void viewReservation(Scanner sc) {
 		System.out.print("Enter Customer ID: ");
 		Long customerId = sc.nextLong();
@@ -412,6 +522,12 @@ public class CustomerUI {
 
 	}
 
+	
+	 /**
+     * Displays the payment history for the customer.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	private static void viewPaymentHistory(Scanner sc) {
 		System.out.print("Enter Customer ID: ");
 		Long customerId = sc.nextLong();
@@ -425,6 +541,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Allows the customer to log in to the car rental system.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	public static void login(Scanner sc) {
 		System.out.println("Enter Username : ");
 		String username = sc.next();
@@ -443,6 +565,12 @@ public class CustomerUI {
 		}
 	}
 
+	
+	/**
+     * Allows the customer to register in the car rental system.
+     *
+     * @param sc Scanner object to read user input.
+     */
 	public static void customerRegister(Scanner sc) {
 		AdminUI.addCustomer(sc);
 	}

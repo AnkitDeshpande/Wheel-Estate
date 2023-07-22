@@ -14,8 +14,23 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
+/**
+ * This class implements the ReservationDAO interface and provides methods to
+ * interact with the database to perform CRUD operations for Reservation
+ * entities.
+ */
 public class ReservartionDAOImpl implements ReservationDAO {
 
+	/**
+	 * Makes a new reservation for a Car entity in the database.
+	 *
+	 * @param reservation The Reservation entity to be made.
+	 * @return The Reservation entity that was made.
+	 * @throws CarNotAvailableException    If the Car associated with the
+	 *                                     reservation is not available for booking.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public Reservation makeReservation(Reservation reservation)
 			throws CarNotAvailableException, SomethingWentWrongException {
@@ -58,6 +73,16 @@ public class ReservartionDAOImpl implements ReservationDAO {
 		}
 	}
 
+	/**
+	 * Cancels an existing reservation in the database based on the given
+	 * reservationId.
+	 *
+	 * @param reservationId The ID of the Reservation to be cancelled.
+	 * @throws NoRecordFoundException      If no Reservation entity is found with
+	 *                                     the given reservationId in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public void cancelReservation(Long reservationId) throws NoRecordFoundException, SomethingWentWrongException {
 		EntityManager em = null;
@@ -102,6 +127,13 @@ public class ReservartionDAOImpl implements ReservationDAO {
 
 	}
 
+	/**
+	 * Retrieves a list of all Reservation entities from the database.
+	 *
+	 * @return A list of all Reservation entities in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Reservation> getAllReservations() throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -121,6 +153,15 @@ public class ReservartionDAOImpl implements ReservationDAO {
 		}
 	}
 
+	/**
+	 * Retrieves a specific Reservation entity from the database based on the given
+	 * reservationId.
+	 *
+	 * @param reservationId The ID of the Reservation entity to be retrieved.
+	 * @return The Reservation entity with the specified reservationId.
+	 * @throws NoRecordFoundException If no Reservation entity is found with the
+	 *                                given reservationId in the database.
+	 */
 	@Override
 	public Reservation getReservationById(Long reservationId) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -146,6 +187,17 @@ public class ReservartionDAOImpl implements ReservationDAO {
 		}
 	}
 
+	/**
+	 * Retrieves a list of Reservation entities associated with a specific customer
+	 * based on the given customerId.
+	 *
+	 * @param customerId The ID of the customer for whom the reservations are to be
+	 *                   retrieved.
+	 * @return A list of Reservation entities associated with the specified
+	 *         customer.
+	 * @throws NoRecordFoundException If no Reservation entity is found for the
+	 *                                given customerId in the database.
+	 */
 	@Override
 	public List<Reservation> getReservationsByCustomer(Long customerId) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -166,6 +218,16 @@ public class ReservartionDAOImpl implements ReservationDAO {
 		}
 	}
 
+	/**
+	 * Retrieves a list of Reservation entities associated with a specific Car based
+	 * on the given carId.
+	 *
+	 * @param carId The ID of the Car for which the reservations are to be
+	 *              retrieved.
+	 * @return A list of Reservation entities associated with the specified Car.
+	 * @throws NoRecordFoundException If no Reservation entity is found for the
+	 *                                given carId in the database.
+	 */
 	@Override
 	public List<Reservation> getReservationsByCar(Long carId) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -186,6 +248,16 @@ public class ReservartionDAOImpl implements ReservationDAO {
 		}
 	}
 
+	/**
+	 * Retrieves a list of Reservation entities associated with a specific Car based
+	 * on the given carId.
+	 *
+	 * @param carId The ID of the Car for which the reservations are to be
+	 *              retrieved.
+	 * @return A list of Reservation entities associated with the specified Car.
+	 * @throws NoRecordFoundException If no Reservation entity is found for the
+	 *                                given carId in the database.
+	 */
 	@Override
 	public List<Reservation> getReservationsBetweenDates(LocalDate startDate, LocalDate endDate)
 			throws SomethingWentWrongException {

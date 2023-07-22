@@ -12,8 +12,20 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 
+/**
+ * This class implements the PaymentDAO interface and provides methods to
+ * interact with the database to perform CRUD operations for Payment entities.
+ */
 public class PaymentDAOImpl implements PaymentDAO {
 
+	/**
+	 * Makes a new Payment entry in the database for a Reservation.
+	 *
+	 * @param payment The Payment entity to be made.
+	 * @return The Payment entity that was made.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public Payment makePayment(Payment payment) throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -40,6 +52,16 @@ public class PaymentDAOImpl implements PaymentDAO {
 		}
 	}
 
+	/**
+	 * Cancels an existing Payment entry in the database based on the given
+	 * paymentId.
+	 *
+	 * @param paymentId The ID of the Payment entry to be cancelled.
+	 * @throws NoRecordFoundException      If no Payment entry is found with the
+	 *                                     given paymentId in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public void cancelPayment(Long paymentId) throws NoRecordFoundException, SomethingWentWrongException {
 		EntityManager em = null;
@@ -62,6 +84,13 @@ public class PaymentDAOImpl implements PaymentDAO {
 
 	}
 
+	/**
+	 * Retrieves a list of all Payment entries from the database.
+	 *
+	 * @return A list of all Payment entries in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Payment> getAllPayments() throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -87,6 +116,15 @@ public class PaymentDAOImpl implements PaymentDAO {
 
 	}
 
+	/**
+	 * Retrieves a specific Payment entry from the database based on the given
+	 * paymentId.
+	 *
+	 * @param paymentId The ID of the Payment entry to be retrieved.
+	 * @return The Payment entity with the specified paymentId.
+	 * @throws NoRecordFoundException If no Payment entry is found with the given
+	 *                                paymentId in the database.
+	 */
 	@Override
 	public Payment getPaymentById(Long paymentId) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -113,6 +151,17 @@ public class PaymentDAOImpl implements PaymentDAO {
 
 	}
 
+	/**
+	 * Retrieves a list of Payment entries associated with a specific customer's
+	 * Reservation.
+	 *
+	 * @param customerId The ID of the customer for whom the Payment entries are to
+	 *                   be retrieved.
+	 * @return A list of Payment entries associated with the specified customer's
+	 *         Reservation.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Payment> getPaymentsByReservation(Long customerId) throws SomethingWentWrongException {
 		EntityManager em = null;

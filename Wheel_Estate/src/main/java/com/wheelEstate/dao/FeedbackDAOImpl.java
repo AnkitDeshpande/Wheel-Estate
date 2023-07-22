@@ -1,5 +1,9 @@
 package com.wheelEstate.dao;
 
+/**
+ * This class implements the FeedbackDAO interface and provides methods to interact with the database
+ * to perform CRUD operations for Feedback entities.
+ */
 import java.util.List;
 
 import com.wheelEstate.Utility.Util;
@@ -15,6 +19,14 @@ import jakarta.persistence.Query;
 
 public class FeedbackDAOImpl implements FeedbackDAO {
 
+	/**
+	 * Adds a new Feedback entry in the database.
+	 *
+	 * @param feedback The Feedback entity to be added.
+	 * @return The Feedback entity that was added.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public Feedback addFeedback(Feedback feedback) throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -36,6 +48,17 @@ public class FeedbackDAOImpl implements FeedbackDAO {
 		}
 	}
 
+	/**
+	 * Updates an existing Feedback entry in the database based on the given
+	 * feedbackId.
+	 *
+	 * @param feedback The Feedback entity with updated details.
+	 * @return The Feedback entity that was updated.
+	 * @throws NoRecordFoundException      If no Feedback entry is found with the
+	 *                                     given feedbackId in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public Feedback updateFeedback(Feedback feedback) throws NoRecordFoundException, SomethingWentWrongException {
 		EntityManager em = null;
@@ -62,6 +85,16 @@ public class FeedbackDAOImpl implements FeedbackDAO {
 		}
 	}
 
+	/**
+	 * Deletes an existing Feedback entry from the database based on the given
+	 * feedbackId.
+	 *
+	 * @param feedbackId The ID of the Feedback entry to be deleted.
+	 * @throws NoRecordFoundException      If no Feedback entry is found with the
+	 *                                     given feedbackId in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public void deleteFeedback(Long feedbackId) throws NoRecordFoundException, SomethingWentWrongException {
 		EntityManager em = null;
@@ -88,6 +121,13 @@ public class FeedbackDAOImpl implements FeedbackDAO {
 
 	}
 
+	/**
+	 * Retrieves a list of all Feedback entries from the database.
+	 *
+	 * @return A list of all Feedback entries in the database.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Feedback> getAllFeedbacks() throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -115,6 +155,15 @@ public class FeedbackDAOImpl implements FeedbackDAO {
 		}
 	}
 
+	/**
+	 * Retrieves a specific Feedback entry from the database based on the given
+	 * feedbackId.
+	 *
+	 * @param feedbackId The ID of the Feedback entry to be retrieved.
+	 * @return The Feedback entity with the specified feedbackId.
+	 * @throws NoRecordFoundException If no Feedback entry is found with the given
+	 *                                feedbackId in the database.
+	 */
 	@Override
 	public Feedback getFeedbackById(Long feedbackId) throws NoRecordFoundException {
 		EntityManager em = null;
@@ -141,6 +190,15 @@ public class FeedbackDAOImpl implements FeedbackDAO {
 		}
 	}
 
+	/**
+	 * Retrieves a list of Feedback entries associated with a specific customer.
+	 *
+	 * @param customerId The ID of the customer for whom the Feedback entries are to
+	 *                   be retrieved.
+	 * @return A list of Feedback entries associated with the specified customer.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	@Override
 	public List<Feedback> getFeedbacksByCustomer(Long customerId) throws SomethingWentWrongException {
 		EntityManager em = null;
@@ -170,6 +228,15 @@ public class FeedbackDAOImpl implements FeedbackDAO {
 		}
 	}
 
+	/**
+	 * Retrieves a list of Feedback entries associated with a specific car.
+	 *
+	 * @param carId The ID of the car for which the Feedback entries are to be
+	 *              retrieved.
+	 * @return A list of Feedback entries associated with the specified car.
+	 * @throws NoRecordFoundException If no Car entry is found with the given carId
+	 *                                in the database.
+	 */
 	@Override
 	public List<Feedback> getFeedbacksByCar(Long carId) throws NoRecordFoundException {
 		EntityManager em = null;

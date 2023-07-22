@@ -25,8 +25,16 @@ import com.wheelEstate.service.PaymentServiceImpl;
 import com.wheelEstate.service.ReservationService;
 import com.wheelEstate.service.ReservationServiceImpl;
 
+/**
+ * This class provides a user interface for the admin functionalities. It allows
+ * the admin to interact with the system, perform CRUD operations on cars,
+ * customers, feedbacks, payments, and reservations.
+ */
 public class AdminUI {
 
+	/**
+	 * Displays the Admin Menu options.
+	 */
 	static void displayAdminMenu() {
 		System.out.println("╔═══════════════ Admin Menu ══════════════╗");
 		System.out.println("║ 1. Add Car                              ║");
@@ -50,6 +58,16 @@ public class AdminUI {
 		System.out.println("╚═════════════════════════════════════════╝");
 	}
 
+	/**
+	 * Displays the admin menu and allows the admin to perform various operations
+	 * based on their choice.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 * @throws CarNotAvailableException    If the car is not available.
+	 * @throws NoRecordFoundException      If no records are found in the database.
+	 */
 	static void adminMenu(Scanner sc)
 			throws SomethingWentWrongException, CarNotAvailableException, NoRecordFoundException {
 		int choice = 0;
@@ -119,6 +137,11 @@ public class AdminUI {
 		} while (choice != 0);
 	}
 
+	/**
+	 * Prints details of a Car entity.
+	 *
+	 * @param car The Car entity to be printed.
+	 */
 	public static void printCarDetails(Car car) {
 		System.out.println("--------------------------------------------------");
 		System.out.println("Car Details:");
@@ -132,6 +155,11 @@ public class AdminUI {
 		System.out.println("--------------------------------------------------");
 	}
 
+	/**
+	 * Prints details of a Customer entity.
+	 *
+	 * @param customer The Customer entity to be printed.
+	 */
 	public static void printCustomerDetails(Customer customer) {
 		if (customer != null) {
 			System.out.println("----------------------------");
@@ -149,6 +177,13 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Adds a new Car to the system based on user input.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	private static void addCar(Scanner sc) throws SomethingWentWrongException {
 		System.out.print("Enter Car Brand: ");
 		String brand = sc.nextLine();
@@ -181,6 +216,14 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Updates the details of an existing Car in the system based on user input.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 * @throws CarNotAvailableException    If the car is not available.
+	 */
 	private static void updateCar(Scanner sc) throws SomethingWentWrongException, CarNotAvailableException {
 		System.out.print("Enter Car ID to update: ");
 		long carId = sc.nextLong();
@@ -218,6 +261,14 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Deletes an existing Car from the system based on user input.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 * @throws NoRecordFoundException   If no Car entry is found with the given
+	 *                                  carId in the database.
+	 * @throws CarNotAvailableException If the car is not available.
+	 */
 	private static void deleteCar(Scanner sc) throws NoRecordFoundException, CarNotAvailableException {
 		System.out.print("Enter Car ID to delete: ");
 		long carId = sc.nextLong();
@@ -232,6 +283,12 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of all Car entities in the system.
+	 *
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 */
 	public static void getAllCars() throws SomethingWentWrongException {
 		CarService carService = new CarServiceImpl();
 		try {
@@ -243,6 +300,13 @@ public class AdminUI {
 			throw new SomethingWentWrongException("Some thing went wrong, Try again later.");
 		}
 	}
+
+	/**
+	 * Updates the details of an existing Customer in the system based on user
+	 * input.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 
 	public static void addCustomer(Scanner sc) {
 
@@ -276,6 +340,12 @@ public class AdminUI {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	/**
+	 * Deletes an existing Customer from the system based on user input.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 
 	private static void updateCustomer(Scanner sc) {
 		System.out.print("Enter Customer ID to update: ");
@@ -314,6 +384,12 @@ public class AdminUI {
 
 	}
 
+	/**
+	 * Updates the details of an existing Customer in the system based on user
+	 * input.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 	private static void deleteCustomer(Scanner sc) {
 		System.out.print("Enter Customer ID to delete: ");
 		long customerId = sc.nextLong();
@@ -327,6 +403,9 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of all Customer entities in the system.
+	 */
 	private static void getAllCustomers() {
 		CustomerService cs = new CustomerServiceImpl();
 		try {
@@ -339,6 +418,12 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of a specific Customer based on the given
+	 * customerId.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 	private static void getCustomerById(Scanner sc) {
 		System.out.print("Enter Customer ID to get details: ");
 		long customerId = sc.nextLong();
@@ -352,6 +437,12 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of a specific Customer based on the given
+	 * username.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 	private static void getCustomerByUsername(Scanner sc) {
 		System.out.print("Enter Customer Username to get details: ");
 		String username = sc.next();
@@ -365,6 +456,9 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of all Feedback entities in the system.
+	 */
 	private static void getAllFeedbacks() {
 		FeedbackService fs = new FeedbackServiceImpl();
 		try {
@@ -375,6 +469,12 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of a specific Feedback based on the given
+	 * feedbackId.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 	private static void getFeedbackById(Scanner sc) {
 		System.out.print("Enter Feedback ID to get details: ");
 		long feedbackId = sc.nextLong();
@@ -388,6 +488,12 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of Feedback entities associated with a specific
+	 * customer.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 	private static void getFeedbacksByCustomer(Scanner sc) {
 		System.out.print("Enter Customer ID to get feedbacks: ");
 		long customerId = sc.nextLong();
@@ -401,6 +507,12 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of Feedback entities associated with a specific
+	 * car.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 	private static void getFeedbacksByCar(Scanner sc) {
 		System.out.print("Enter Car ID to get feedbacks: ");
 		long carId = sc.nextLong();
@@ -414,6 +526,9 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of all Payment entities in the system.
+	 */
 	private static void getAllPayments() {
 		PaymentService ps = new PaymentServiceImpl();
 		try {
@@ -424,6 +539,9 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of all Reservation entities in the system.
+	 */
 	private static void getAllReservations() {
 		ReservationService rs = new ReservationServiceImpl();
 		try {
@@ -434,6 +552,12 @@ public class AdminUI {
 		}
 	}
 
+	/**
+	 * Retrieves and prints details of Reservation entities between the given start
+	 * and end dates.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 */
 	private static void getReservationsBetweenDates(Scanner sc) {
 		System.out.print("Enter start date (yyyy-MM-dd): ");
 		String startDate = sc.next();
@@ -451,6 +575,16 @@ public class AdminUI {
 		}
 
 	}
+
+	/**
+	 * Performs the login operation for the admin user.
+	 *
+	 * @param sc The Scanner object used to take user input.
+	 * @throws SomethingWentWrongException If something unexpected happens during
+	 *                                     the database operation.
+	 * @throws CarNotAvailableException    If the car is not available.
+	 * @throws NoRecordFoundException      If no records are found in the database.
+	 */
 
 	public static void login(Scanner sc)
 			throws SomethingWentWrongException, CarNotAvailableException, NoRecordFoundException {
