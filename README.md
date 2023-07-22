@@ -1,6 +1,9 @@
 # Wheel Estate - A Car Rental Service.
 
-Database Tables : <img width="560" alt="Screenshot 2023-07-22 134310" src="https://github.com/AnkitDeshpande/Wheel-Estate/assets/115605876/1fd831c8-58f8-4790-ab91-363af99b943e">
+- Database Tables : 
+
+
+<img width="560" alt="Screenshot 2023-07-22 134310" src="https://github.com/AnkitDeshpande/Wheel-Estate/assets/115605876/1fd831c8-58f8-4790-ab91-363af99b943e">
 
 
 Wheel Estate is a car rental service that provides customers with the convenience of renting cars for travel, business trips, or special occasions. This application offers a user-friendly interface for browsing and selecting from a wide range of available cars, making reservations, and managing bookings. Below are the key features of Wheel Estate:
